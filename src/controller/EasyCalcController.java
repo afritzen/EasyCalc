@@ -12,6 +12,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+/**
+ * Listens for input in the view and processes it within the model.
+ */
 public class EasyCalcController implements  ActionListener {
 
     /**
@@ -45,7 +48,7 @@ public class EasyCalcController implements  ActionListener {
             try {
                 // calculate result for every value
                 for (double value : valueContainer.getValues()) {
-                    valueContainer.calculate(value);
+                    valueContainer.calculate(value, 4);
                 }
                 // display results
                 view.setResults(valueContainer.getValues(), valueContainer.getResults());
@@ -76,7 +79,6 @@ public class EasyCalcController implements  ActionListener {
             StringSelection stringSelection = new StringSelection(stringBuilder.toString());
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, null);
-            System.out.println(stringBuilder.toString());
 
         }
     }
@@ -90,7 +92,6 @@ public class EasyCalcController implements  ActionListener {
         public void keyPressed (KeyEvent keyEvent) {
 
             if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
-                System.out.println("Test");
 
                 try {
                     // store value in container

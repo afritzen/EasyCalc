@@ -7,8 +7,8 @@ import view.EasyCalcView;
 public class EasyCalcMain {
 
     /**
-     * Set up application.
-     * @param args
+     * Sets up application and initializes all components needed for MVC.
+     * @param args commandline arguments
      */
     public static void main (String[] args) {
 

@@ -6,9 +6,13 @@ import javax.swing.*;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+/**
+ * The view for the application containing all buttons and textfields.
+ */
 public class EasyCalcView extends JFrame{
 
     public static final int SIZE = 600;
+    public static final String TITLE = "EasyCalc 1.0";
 
     private JLabel valueLabel = new JLabel("Value:");
     private JTextField enterValue = new JTextField(10);
@@ -24,7 +28,7 @@ public class EasyCalcView extends JFrame{
     public EasyCalcView (EasyCalcController controller) {
 
         JPanel easyCalcPanel = new JPanel();
-        this.setTitle("EasyCalc 1.0");
+        this.setTitle(TITLE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(SIZE, SIZE);
 
@@ -66,8 +70,6 @@ public class EasyCalcView extends JFrame{
         calcResults.setText(stringBuilder.toString());
     }
 
-
-
     public JButton getCalculateAllBtn() {
         return calculateAllBtn;
     }
@@ -84,17 +86,9 @@ public class EasyCalcView extends JFrame{
         return calcResults;
     }
 
-    /*public void addCalculateListener(ActionListener listenForCalcBtn) {
-        calculateAllBtn.addActionListener(listenForCalcBtn);
-    }*/
-
     public void addKeyListener(KeyListener keyListener) {
         enterValue.addKeyListener(keyListener);
     }
-
-    /*public void addClearListener(ActionListener listenForClearBtn) {
-        clearBtn.addActionListener(listenForClearBtn);
-    }*/
 
     public void displayErrorMessage(String msg) {
         JOptionPane.showMessageDialog(this, msg);

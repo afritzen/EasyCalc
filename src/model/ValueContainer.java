@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * Holds all glucose values and calculates the exact amount.
+ */
 public class ValueContainer {
 
     /**
@@ -19,12 +22,12 @@ public class ValueContainer {
     public ValueContainer () {}
 
     /**
-     * Performs a simple calculation.
+     * Performs a simple calculation for glucose concentration.
      * @param value value to be calculated
-     * @return result needed for lab
+     * @return result needed for lab and table
      */
-    public double calculate(double value) {
-        double result = value*4*0.01;
+    public double calculate(double value, double factor) {
+        double result = value*factor*0.01;
         results.add(result);
         return result;
     }
