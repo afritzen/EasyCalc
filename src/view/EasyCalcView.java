@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,8 @@ public class EasyCalcView extends JFrame{
      */
     private String[] factors = {FACTOR_WHOLE, FACTOR_HALF};
 
+    DecimalFormat decimalFormat = new DecimalFormat("##.##");
+
     // components for the view go here
     private JLabel valueLabel = new JLabel("Value:");
     private JTextField enterValue = new JTextField(10);
@@ -38,6 +41,7 @@ public class EasyCalcView extends JFrame{
     private JTextArea calcResults = new JTextArea(30, 15);
     private JLabel factorsLabel = new JLabel("Factor:");
     private JComboBox factorsToChoose = new JComboBox(factors);
+    private JButton instructionsBtn = new JButton("Instructions");
 
 
     /**
@@ -63,6 +67,7 @@ public class EasyCalcView extends JFrame{
         easyCalcPanel.add(copyBtn);
         easyCalcPanel.add(factorsLabel);
         easyCalcPanel.add(factorsToChoose);
+        easyCalcPanel.add(instructionsBtn);
         // set factor 4 as default
         factorsToChoose.setSelectedIndex(0);
         this.add(easyCalcPanel);
@@ -89,7 +94,7 @@ public class EasyCalcView extends JFrame{
     public void setResults(ArrayList<Double> values, ArrayList<Double> results) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < results.size(); i++) {
-            stringBuilder.append(Double.toString(values.get(i)) + " --> " + results.get(i) + '\n');
+            stringBuilder.append(values.get(i) + " --> " + decimalFormat.format(results.get(i)) + '\n');
         }
         calcResults.setText(stringBuilder.toString());
     }
@@ -114,11 +119,15 @@ public class EasyCalcView extends JFrame{
         return factorsToChoose;
     }
 
+    public JButton getInstructionsBtn() {
+        return instructionsBtn;
+    }
+
     public void addKeyListener(KeyListener keyListener) {
         enterValue.addKeyListener(keyListener);
     }
 
-    public void displayErrorMessage(String msg) {
+    public void displayMessage(String msg) {
         JOptionPane.showMessageDialog(this, msg);
     }
 

@@ -10,7 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Listens for input in the view and processes it within the model.
@@ -25,6 +28,10 @@ public class EasyCalcController implements  ActionListener {
      * The view displaying the actual application.
      */
     private EasyCalcView view;
+    /**
+     * Converts value to desired format (xx,xx).
+    */
+    private DecimalFormat decimalFormat = new DecimalFormat("##.##");
 
     /**
      * Initialize view and model, add listeners.
@@ -34,9 +41,11 @@ public class EasyCalcController implements  ActionListener {
     public EasyCalcController (ValueContainer valueContainer, EasyCalcView view) {
         this.view = view;
         this.valueContainer = valueContainer;
+        this.view.getFactorsToChoose().addActionListener(this);
         this.view.getClearBtn().addActionListener(this);
         this.view.getCalculateAllBtn().addActionListener(this);
         this.view.getCopyBtn().addActionListener(this);
+        this.view.getInstructionsBtn().addActionListener(this);
         this.view.addKeyListener(new EasyCalcKeyListener());
     }
 
@@ -45,21 +54,16 @@ public class EasyCalcController implements  ActionListener {
 
         if (e.getSource() == view.getCalculateAllBtn()) {
 
-            try {
                 // calculate result for every value
                 for (double value : valueContainer.getValues()) {
                     if (view.getFactorsToChoose().getSelectedItem() == view.FACTOR_HALF) {
-                        valueContainer.calculate(value, 4);
-                    } else {
                         valueContainer.calculate(value, 8);
+                    } else {
+                        valueContainer.calculate(value, 4);
                     }
                 }
                 // display results
                 view.setResults(valueContainer.getValues(), valueContainer.getResults());
-
-            } catch (NumberFormatException nfe) {
-                view.displayErrorMessage("Please enter a valid number!");
-            }
 
         } else if (e.getSource() == view.getClearBtn()) {
 
@@ -77,13 +81,16 @@ public class EasyCalcController implements  ActionListener {
             // concatenate values to build a single string
             StringBuilder stringBuilder = new StringBuilder();
             for (double result : valueContainer.getResults()) {
-                stringBuilder.append(Double.toString(result) + '\n');
+                stringBuilder.append(decimalFormat.format(result) + '\n');
             }
             // copy all values to clipboard
             StringSelection stringSelection = new StringSelection(stringBuilder.toString());
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, null);
 
+        } else if (e.getSource() == view.getInstructionsBtn()) {
+            view.displayMessage("Press Enter to store an entered value \n" +
+                    "Before calculating, chose a factor the value has to be multiplied with.");
         }
     }
 
@@ -102,7 +109,7 @@ public class EasyCalcController implements  ActionListener {
                     valueContainer.getValues().add(view.getEnteredValue());
                     view.clearEnteredValue();
                 } catch (NumberFormatException e) {
-                    view.displayErrorMessage("Please enter a value!");
+                    view.displayMessage("Please enter a valid number!");
                 }
             }
         }
