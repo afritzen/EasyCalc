@@ -16,6 +16,7 @@ public class ValueContainer {
      */
     private ArrayList<Double> results = new ArrayList<>();
 
+
     /**
      * Default constructor, not needed here.
      */
@@ -47,4 +48,5 @@ public class ValueContainer {
     public void setResults(ArrayList<Double> results) {
         this.results = results;
     }
+
 }

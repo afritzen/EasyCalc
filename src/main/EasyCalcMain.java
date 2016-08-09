@@ -15,9 +15,6 @@ public class EasyCalcMain {
         ValueContainer valueContainer = new ValueContainer();
         EasyCalcView easyCalcView = new EasyCalcView(null);
         EasyCalcController easyCalcController = new EasyCalcController(valueContainer, easyCalcView);
-
-        // display main window
-        easyCalcView.setVisible(true);
     }
 
 }

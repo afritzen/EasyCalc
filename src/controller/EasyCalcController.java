@@ -48,7 +48,11 @@ public class EasyCalcController implements  ActionListener {
             try {
                 // calculate result for every value
                 for (double value : valueContainer.getValues()) {
-                    valueContainer.calculate(value, 4);
+                    if (view.getFactorsToChoose().getSelectedItem() == view.FACTOR_HALF) {
+                        valueContainer.calculate(value, 4);
+                    } else {
+                        valueContainer.calculate(value, 8);
+                    }
                 }
                 // display results
                 view.setResults(valueContainer.getValues(), valueContainer.getResults());
@@ -57,7 +61,7 @@ public class EasyCalcController implements  ActionListener {
                 view.displayErrorMessage("Please enter a valid number!");
             }
 
-        } else if (e.getSource() == (view.getClearBtn())) {
+        } else if (e.getSource() == view.getClearBtn()) {
 
             view.clearResults();
             // create new lists instead of emptying the old ones

@@ -3,6 +3,8 @@ package view;
 import controller.EasyCalcController;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
@@ -13,7 +15,20 @@ public class EasyCalcView extends JFrame{
 
     public static final int SIZE = 600;
     public static final String TITLE = "EasyCalc 1.0";
+    /**
+     * Factor of 4, by which the value can be multiplied.
+     */
+    public static final String FACTOR_WHOLE = "4";
+    /**
+     * Factor of 4, by which the value can be multiplied.
+     */
+    public static final String FACTOR_HALF = "8";
+    /**
+     * Factors to choose from.
+     */
+    private String[] factors = {FACTOR_WHOLE, FACTOR_HALF};
 
+    // components for the view go here
     private JLabel valueLabel = new JLabel("Value:");
     private JTextField enterValue = new JTextField(10);
     private JButton calculateAllBtn = new JButton("Calculate all");
@@ -21,6 +36,9 @@ public class EasyCalcView extends JFrame{
     private JButton clearBtn = new JButton("Clear");
     private JButton copyBtn = new JButton("Copy to clipboard");
     private JTextArea calcResults = new JTextArea(30, 15);
+    private JLabel factorsLabel = new JLabel("Factor:");
+    private JComboBox factorsToChoose = new JComboBox(factors);
+
 
     /**
      * Initialize and add components.
@@ -31,6 +49,7 @@ public class EasyCalcView extends JFrame{
         this.setTitle(TITLE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(SIZE, SIZE);
+        this.setVisible(true);
 
         // add all components
         easyCalcPanel.add(valueLabel);
@@ -42,7 +61,12 @@ public class EasyCalcView extends JFrame{
         calcResults.setEditable(false);
         easyCalcPanel.add(clearBtn);
         easyCalcPanel.add(copyBtn);
+        easyCalcPanel.add(factorsLabel);
+        easyCalcPanel.add(factorsToChoose);
+        // set factor 4 as default
+        factorsToChoose.setSelectedIndex(0);
         this.add(easyCalcPanel);
+
     }
 
     public double getEnteredValue () {
@@ -84,6 +108,10 @@ public class EasyCalcView extends JFrame{
 
     public JTextArea getCalcResults() {
         return calcResults;
+    }
+
+    public JComboBox<Double> getFactorsToChoose() {
+        return factorsToChoose;
     }
 
     public void addKeyListener(KeyListener keyListener) {
